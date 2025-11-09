@@ -553,7 +553,7 @@ func printLogo() {
 [yellow][bold]                 🦖 TALON 🦖[reset]
 
 [yellow][bold]Tyractyl Talon[reset] - The mighty server control plane
-Copyright © 2018 - %d Dane Everitt & Contributors
+Copyright © 2025 Mattias Micu
 
 [green]Website:[reset]  https://tyractyl.io
  [green]Source:[reset]  https://github.com/tyractyl/talon
