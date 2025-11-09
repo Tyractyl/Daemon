@@ -5,14 +5,14 @@ import (
 
 	"github.com/gbrlsnchs/jwt/v3"
 
-	"github.com/pterodactyl/wings/config"
+	"github.com/tyractyl/talon/config"
 )
 
 type TokenData interface {
 	GetPayload() *jwt.Payload
 }
 
-// Validates the provided JWT against the known secret for the Daemon and returns the
+// Validates the provided JWT against the known secret for the Talon instance and returns the
 // parsed data. This function DOES NOT validate that the token is valid for the connected
 // server, nor does it ensure that the user providing the token is able to actually do things.
 //

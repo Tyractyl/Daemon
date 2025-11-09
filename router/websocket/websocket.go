@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pterodactyl/wings/internal/models"
+	"github.com/tyractyl/talon/internal/models"
 
 	"emperror.dev/errors"
 	"github.com/apex/log"
@@ -18,13 +18,13 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/system"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/environment/docker"
-	"github.com/pterodactyl/wings/router/tokens"
-	"github.com/pterodactyl/wings/server"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/environment/docker"
+	"github.com/tyractyl/talon/router/tokens"
+	"github.com/tyractyl/talon/server"
 )
 
 const (

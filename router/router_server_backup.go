@@ -9,9 +9,9 @@ import (
 	"github.com/apex/log"
 	"github.com/gin-gonic/gin"
 
-	"github.com/pterodactyl/wings/router/middleware"
-	"github.com/pterodactyl/wings/server"
-	"github.com/pterodactyl/wings/server/backup"
+	"github.com/tyractyl/talon/router/middleware"
+	"github.com/tyractyl/talon/server"
+	"github.com/tyractyl/talon/server/backup"
 )
 
 // postServerBackup performs a backup against a given server instance using the
@@ -71,7 +71,7 @@ func postServerRestoreBackup(c *gin.Context) {
 	logger := middleware.ExtractLogger(c)
 
 	var data struct {
-		Adapter           backup.AdapterType `binding:"required,oneof=wings s3" json:"adapter"`
+		Adapter           backup.AdapterType `binding:"required,oneof=talon s3" json:"adapter"`
 		TruncateDirectory bool               `json:"truncate_directory"`
 		// A UUID is always required for this endpoint, however the download URL
 		// is only present when the given adapter type is s3.
@@ -117,7 +117,7 @@ func postServerRestoreBackup(c *gin.Context) {
 			if err := s.RestoreBackup(b, nil); err != nil {
 				logger.WithField("error", err).Error("failed to restore local backup to server")
 			}
-			s.Events().Publish(server.DaemonMessageEvent, "Completed server restoration from local backup.")
+			s.Events().Publish(server.TalonMessageEvent, "Completed server restoration from local backup.")
 			s.Events().Publish(server.BackupRestoreCompletedEvent, "")
 			logger.Info("completed server restoration from local backup")
 			s.SetRestoring(false)
@@ -161,7 +161,7 @@ func postServerRestoreBackup(c *gin.Context) {
 		if err := s.RestoreBackup(backup.NewS3(client, uuid, ""), res.Body); err != nil {
 			logger.WithField("error", errors.WithStack(err)).Error("failed to restore remote S3 backup to server")
 		}
-		s.Events().Publish(server.DaemonMessageEvent, "Completed server restoration from S3 backup.")
+		s.Events().Publish(server.TalonMessageEvent, "Completed server restoration from S3 backup.")
 		s.Events().Publish(server.BackupRestoreCompletedEvent, "")
 		logger.Info("completed server restoration from S3 backup")
 		s.SetRestoring(false)

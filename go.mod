@@ -1,4 +1,4 @@
-module github.com/pterodactyl/wings
+module github.com/tyractyl/talon
 
 go 1.23.0
 

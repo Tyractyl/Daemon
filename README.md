@@ -4,13 +4,13 @@
 ![GitHub Releases](https://img.shields.io/github/downloads/pterodactyl/wings/latest/total)
 [![Go Report Card](https://goreportcard.com/badge/github.com/pterodactyl/wings)](https://goreportcard.com/report/github.com/pterodactyl/wings)
 
-# Pterodactyl Wings
+# Tyractyl Daemon
 
-Wings is Pterodactyl's server control plane, built for the rapidly changing gaming industry and designed to be
-highly performant and secure. Wings provides an HTTP API allowing you to interface directly with running server
+Tyractyl Daemon is Tyractyl's server control plane, built for the rapidly changing gaming industry and designed to be
+highly performant and secure. The daemon provides an HTTP API allowing you to interface directly with running server
 instances, fetch server logs, generate backups, and control all aspects of the server lifecycle.
 
-In addition, Wings ships with a built-in SFTP server allowing your system to remain free of Pterodactyl specific
+In addition, Tyractyl Daemon ships with a built-in SFTP server allowing your system to remain free of Tyractyl specific
 dependencies, and allowing users to authenticate with the same credentials they would normally use to access the Panel.
 
 ## Sponsors

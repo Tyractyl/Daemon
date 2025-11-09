@@ -16,9 +16,9 @@ import (
 	"github.com/klauspost/pgzip"
 	ignore "github.com/sabhiram/go-gitignore"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/internal/progress"
-	"github.com/pterodactyl/wings/internal/ufs"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/internal/progress"
+	"github.com/tyractyl/talon/internal/ufs"
 )
 
 const memory = 4 * 1024

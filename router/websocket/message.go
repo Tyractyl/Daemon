@@ -9,7 +9,7 @@ const (
 	SendServerLogsEvent        = "send logs"
 	SendCommandEvent           = "send command"
 	SendStatsEvent             = "send stats"
-	ErrorEvent                 = "daemon error"
+	ErrorEvent                 = "talon error"
 	JwtErrorEvent              = "jwt error"
 )
 

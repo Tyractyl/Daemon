@@ -23,14 +23,14 @@ import (
 	"github.com/docker/docker/pkg/parsers/operatingsystem"
 	"github.com/spf13/cobra"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/loggers/cli"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/loggers/cli"
+	"github.com/tyractyl/talon/system"
 )
 
 const (
-	DefaultHastebinUrl = "https://ptero.co"
+	DefaultHastebinUrl = "https://tyra.co"
 	DefaultLogLines    = 200
 )
 
@@ -45,7 +45,7 @@ var diagnosticsArgs struct {
 func newDiagnosticsCommand() *cobra.Command {
 	command := &cobra.Command{
 		Use:   "diagnostics",
-		Short: "Collect and report information about this Wings instance to assist in debugging.",
+		Short: "Collect and report information about this Talon instance to assist in debugging.",
 		PreRun: func(cmd *cobra.Command, args []string) {
 			initConfig()
 			log.SetHandler(cli.Default)
@@ -59,10 +59,10 @@ func newDiagnosticsCommand() *cobra.Command {
 	return command
 }
 
-// diagnosticsCmdRun collects diagnostics about wings, its configuration and the node.
+// diagnosticsCmdRun collects diagnostics about talon, its configuration and the node.
 // We collect:
-// - wings and docker versions
-// - relevant parts of daemon configuration
+// - talon and docker versions
+// - relevant parts of talon configuration
 // - the docker debug output
 // - running docker containers
 // - logs
@@ -95,9 +95,9 @@ func diagnosticsCmdRun(*cobra.Command, []string) {
 	dockerVersion, dockerInfo, dockerErr := getDockerInfo()
 
 	output := &strings.Builder{}
-	fmt.Fprintln(output, "Pterodactyl Wings - Diagnostics Report")
+	fmt.Fprintln(output, "Tyractyl Talon - Diagnostics Report")
 	printHeader(output, "Versions")
-	fmt.Fprintln(output, "               Wings:", system.Version)
+	fmt.Fprintln(output, "               Talon:", system.Version)
 	if dockerErr == nil {
 		fmt.Fprintln(output, "              Docker:", dockerVersion.Version)
 	}
@@ -108,7 +108,7 @@ func diagnosticsCmdRun(*cobra.Command, []string) {
 		fmt.Fprintln(output, "                  OS:", os)
 	}
 
-	printHeader(output, "Wings Configuration")
+	printHeader(output, "Talon Configuration")
 	if err := config.FromFile(config.DefaultLocation); err != nil {
 	}
 	cfg := config.Get()
@@ -165,11 +165,11 @@ func diagnosticsCmdRun(*cobra.Command, []string) {
 		fmt.Fprint(output, "Couldn't list containers: ", err)
 	}
 
-	printHeader(output, "Latest Wings Logs")
+	printHeader(output, "Latest Talon Logs")
 	if diagnosticsArgs.IncludeLogs {
-		p := "/var/log/pterodactyl/wings.log"
+		p := "/var/log/tyractyl/talon.log"
 		if cfg != nil {
-			p = path.Join(cfg.System.LogDirectory, "wings.log")
+			p = path.Join(cfg.System.LogDirectory, "talon.log")
 		}
 		if c, err := exec.Command("tail", "-n", strconv.Itoa(diagnosticsArgs.LogLines), p).Output(); err != nil {
 			fmt.Fprintln(output, "No logs found or an error occurred.")

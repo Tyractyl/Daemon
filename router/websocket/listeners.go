@@ -8,10 +8,10 @@ import (
 
 	"emperror.dev/errors"
 
-	"github.com/pterodactyl/wings/events"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/events"
+	"github.com/tyractyl/talon/system"
 
-	"github.com/pterodactyl/wings/server"
+	"github.com/tyractyl/talon/server"
 )
 
 // RegisterListenerEvents will setup the server event listeners and expiration
@@ -73,7 +73,7 @@ var e = []string{
 	server.InstallOutputEvent,
 	server.InstallStartedEvent,
 	server.InstallCompletedEvent,
-	server.DaemonMessageEvent,
+	server.TalonMessageEvent,
 	server.BackupCompletedEvent,
 	server.BackupRestoreCompletedEvent,
 	server.TransferLogsEvent,

@@ -10,11 +10,11 @@ import (
 	"github.com/apex/log"
 	"github.com/gin-gonic/gin"
 
-	"github.com/pterodactyl/wings/router/downloader"
-	"github.com/pterodactyl/wings/router/middleware"
-	"github.com/pterodactyl/wings/router/tokens"
-	"github.com/pterodactyl/wings/server"
-	"github.com/pterodactyl/wings/server/transfer"
+	"github.com/tyractyl/talon/router/downloader"
+	"github.com/tyractyl/talon/router/middleware"
+	"github.com/tyractyl/talon/router/tokens"
+	"github.com/tyractyl/talon/server"
+	"github.com/tyractyl/talon/server/transfer"
 )
 
 // Returns a single server from the collection of servers.
@@ -188,7 +188,7 @@ func postServerReinstall(c *gin.Context) {
 	c.Status(http.StatusAccepted)
 }
 
-// Deletes a server from the wings daemon and dissociate its objects.
+// Deletes a server from the talon instance and dissociate its objects.
 func deleteServer(c *gin.Context) {
 	s := middleware.ExtractServer(c)
 

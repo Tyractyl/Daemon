@@ -11,10 +11,10 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/events"
-	"github.com/pterodactyl/wings/remote"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/events"
+	"github.com/tyractyl/talon/remote"
+	"github.com/tyractyl/talon/system"
 )
 
 type Metadata struct {
@@ -150,7 +150,7 @@ func (e *Environment) ExitState() (uint32, bool, error) {
 	c, err := e.ContainerInspect(context.Background())
 	if err != nil {
 		// I'm not entirely sure how this can happen to be honest. I tried deleting a
-		// container _while_ a server was running and wings gracefully saw the crash and
+		// container _while_ a server was running and talon gracefully saw the crash and
 		// created a new container for it.
 		//
 		// However, someone reported an error in Discord about this scenario happening,

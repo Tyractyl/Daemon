@@ -1,13 +1,13 @@
 package server
 
 import (
-	"github.com/pterodactyl/wings/events"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/events"
+	"github.com/tyractyl/talon/system"
 )
 
 // Defines all the possible output events for a server.
 const (
-	DaemonMessageEvent          = "daemon message"
+	TalonMessageEvent          = "talon message"
 	InstallOutputEvent          = "install output"
 	InstallStartedEvent         = "install started"
 	InstallCompletedEvent       = "install completed"

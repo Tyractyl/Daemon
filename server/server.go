@@ -13,16 +13,16 @@ import (
 	"github.com/apex/log"
 	"github.com/creasty/defaults"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/events"
-	"github.com/pterodactyl/wings/remote"
-	"github.com/pterodactyl/wings/server/filesystem"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/events"
+	"github.com/tyractyl/talon/remote"
+	"github.com/tyractyl/talon/server/filesystem"
+	"github.com/tyractyl/talon/system"
 )
 
 // Server is the high level definition for a server instance being controlled
-// by Wings.
+// by Talon.
 type Server struct {
 	// Internal mutex used to block actions that need to occur sequentially, such as
 	// writing the configuration to the disk.
@@ -174,12 +174,12 @@ func (s *Server) Log() *log.Entry {
 	return log.WithField("server", s.ID())
 }
 
-// Sync syncs the state of the server on the Panel with Wings. This ensures that
+// Sync syncs the state of the server on the Panel with Talon. This ensures that
 // we're always using the state of the server from the Panel and allows us to
-// not require successful API calls to Wings to do things.
+// not require successful API calls to Talon to do things.
 //
 // This also means mass actions can be performed against servers on the Panel
-// and they will automatically sync with Wings when the server is started.
+// and they will automatically sync with Talon when the server is started.
 func (s *Server) Sync() error {
 	cfg, err := s.client.GetServerConfiguration(s.Context(), s.ID())
 	if err != nil {
@@ -325,7 +325,7 @@ func (s *Server) OnStateChange() {
 				if IsTooFrequentCrashError(err) {
 					server.Log().Info("did not restart server after crash; occurred too soon after the last")
 				} else {
-					s.PublishConsoleOutputFromDaemon("Server crash was detected but an error occurred while handling it.")
+					s.PublishConsoleOutputFromTalon("Server crash was detected but an error occurred while handling it.")
 					server.Log().WithField("error", err).Error("failed to handle server crash")
 				}
 			}
@@ -334,7 +334,7 @@ func (s *Server) OnStateChange() {
 }
 
 // IsRunning determines if the server state is running or not. This is different
-// from the environment state, it is simply the tracked state from this daemon
+// from the environment state, it is simply the tracked state from this talon instance
 // instance, and not the response from Docker.
 func (s *Server) IsRunning() bool {
 	st := s.Environment.State()
@@ -343,7 +343,7 @@ func (s *Server) IsRunning() bool {
 }
 
 // APIResponse is a type returned when requesting details about a single server
-// instance on Wings. This includes the information needed by the Panel in order
+// instance on Talon. This includes the information needed by the Panel in order
 // to show resource utilization and the current state on this system.
 type APIResponse struct {
 	State         string        `json:"state"`

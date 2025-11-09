@@ -9,11 +9,11 @@ import (
 
 	"github.com/apex/log"
 
-	"github.com/pterodactyl/wings/events"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/events"
+	"github.com/tyractyl/talon/system"
 
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/remote"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/remote"
 )
 
 var dockerEvents = []string{
@@ -46,7 +46,7 @@ func (dsl *diskSpaceLimiter) Reset() {
 // should be reset, so it can properly be triggered as needed.
 func (dsl *diskSpaceLimiter) Trigger() {
 	dsl.o.Do(func() {
-		dsl.server.PublishConsoleOutputFromDaemon("Server is exceeding the assigned disk space limit, stopping process now.")
+		dsl.server.PublishConsoleOutputFromTalon("Server is exceeding the assigned disk space limit, stopping process now.")
 		if err := dsl.server.Environment.WaitForStop(dsl.server.Context(), time.Minute, true); err != nil {
 			dsl.server.Log().WithField("error", err).Error("failed to stop server after exceeding space limit!")
 		}
@@ -129,9 +129,9 @@ func (s *Server) StartEventListeners() {
 					case environment.DockerImagePullStatus:
 						s.Events().Publish(InstallOutputEvent, e.Data)
 					case environment.DockerImagePullStarted:
-						s.PublishConsoleOutputFromDaemon("Pulling Docker container image, this could take a few minutes to complete...")
+						s.PublishConsoleOutputFromTalon("Pulling Docker container image, this could take a few minutes to complete...")
 					case environment.DockerImagePullCompleted:
-						s.PublishConsoleOutputFromDaemon("Finished pulling Docker container image")
+						s.PublishConsoleOutputFromTalon("Finished pulling Docker container image")
 					default:
 					}
 				}(v, limit)

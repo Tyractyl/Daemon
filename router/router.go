@@ -5,13 +5,13 @@ import (
 	"github.com/apex/log"
 	"github.com/gin-gonic/gin"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/remote"
-	"github.com/pterodactyl/wings/router/middleware"
-	wserver "github.com/pterodactyl/wings/server"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/remote"
+	"github.com/tyractyl/talon/router/middleware"
+	wserver "github.com/tyractyl/talon/server"
 )
 
-// Configure configures the routing infrastructure for this daemon instance.
+// Configure configures the routing infrastructure for this talon instance.
 func Configure(m *wserver.Manager, client remote.Client) *gin.Engine {
 	gin.SetMode("release")
 
@@ -49,9 +49,9 @@ func Configure(m *wserver.Manager, client remote.Client) *gin.Engine {
 	// accessible.
 	router.GET("/api/servers/:server/ws", middleware.ServerExists(), getServerWebsocket)
 
-	// This request is called by another daemon when a server is going to be transferred out.
+	// This request is called by another talon instance when a server is going to be transferred out.
 	// This request does not need the AuthorizationMiddleware as the panel should never call it
-	// and requests are authenticated through a JWT the panel issues to the other daemon.
+	// and requests are authenticated through a JWT the panel issues to the other talon instance.
 	router.POST("/api/transfers", postTransfers)
 
 	// All the routes beyond this mount will use an authorization middleware
@@ -64,7 +64,7 @@ func Configure(m *wserver.Manager, client remote.Client) *gin.Engine {
 	protected.DELETE("/api/transfers/:server", deleteTransfer)
 
 	// These are server specific routes, and require that the request be authorized, and
-	// that the server exist on the Daemon.
+	// that the server exist on the Talon instance.
 	server := router.Group("/api/servers/:server")
 	server.Use(middleware.RequireAuthorization(), middleware.ServerExists())
 	{

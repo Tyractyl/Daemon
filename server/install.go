@@ -18,10 +18,10 @@ import (
 	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/client"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/remote"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/remote"
+	"github.com/tyractyl/talon/system"
 )
 
 // Install executes the installation stack for a server process. Bubbles any
@@ -200,7 +200,7 @@ func (ip *InstallationProcess) Run() error {
 	}
 
 	// If this step fails, log a warning but don't exit out of the process. This is completely
-	// internal to the daemon's functionality, and does not affect the status of the server itself.
+	// internal to the talon's functionality, and does not affect the status of the server itself.
 	if err := ip.AfterExecute(cID); err != nil {
 		ip.Server.Log().WithField("error", err).Warn("failed to complete after-execute step of installation process")
 	}
@@ -441,7 +441,7 @@ func (ip *InstallationProcess) Execute() (string, error) {
 
 	// Ensure the root directory for the server exists properly before attempting
 	// to trigger the reinstall of the server. It is possible the directory would
-	// not exist when this runs if Wings boots with a missing directory and a user
+	// not exist when this runs if Talon boots with a missing directory and a user
 	// triggers a reinstall before trying to start the server.
 	if err := ip.Server.EnsureDataDirectoryExists(); err != nil {
 		return "", err
@@ -473,7 +473,7 @@ func (ip *InstallationProcess) Execute() (string, error) {
 	// If there is an error during the streaming output just report it and do nothing else, the
 	// install can still run, the console just won't have any output.
 	go func(id string) {
-		ip.Server.Events().Publish(DaemonMessageEvent, "Starting installation process, this could take a few minutes...")
+		ip.Server.Events().Publish(TalonMessageEvent, "Starting installation process, this could take a few minutes...")
 		if err := ip.StreamOutput(ctx, id); err != nil {
 			ip.Server.Log().WithField("error", err).Warn("error connecting to server install stream output")
 		}
@@ -484,7 +484,7 @@ func (ip *InstallationProcess) Execute() (string, error) {
 	case err := <-eChan:
 		// Once the container has stopped running we can mark the install process as being completed.
 		if err == nil {
-			ip.Server.Events().Publish(DaemonMessageEvent, "Installation process completed.")
+			ip.Server.Events().Publish(TalonMessageEvent, "Installation process completed.")
 		} else {
 			return "", err
 		}

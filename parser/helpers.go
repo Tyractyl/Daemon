@@ -18,7 +18,7 @@ import (
 // value to the configuration one.
 //
 // This allows configurations to reference values that are node dependent, such as the
-// internal IP address used by the daemon, useful in Bungeecord setups for example, where
+	// internal IP address used by talon, useful in Bungeecord setups for example, where
 // it is common to see variables such as "{{config.docker.interface}}"
 var configMatchRegex = regexp.MustCompile(`{{\s?config\.([\w.-]+)\s?}}`)
 
@@ -214,7 +214,7 @@ func (cfr *ConfigurationFileReplacement) SetAtPathway(c *gabs.Container, path st
 	return setValueAtPath(c, path, cfr.getKeyValue(value))
 }
 
-// Looks up a configuration value on the Daemon given a dot-notated syntax.
+// Looks up a configuration value on the Talon instance given a dot-notated syntax.
 func (f *ConfigurationFile) LookupConfigurationValue(cfr ConfigurationFileReplacement) (string, error) {
 	// If this is not something that we can do a regex lookup on then just continue
 	// on our merry way. If the value isn't a string, we're not going to be doing anything
@@ -223,9 +223,9 @@ func (f *ConfigurationFile) LookupConfigurationValue(cfr ConfigurationFileReplac
 		return cfr.ReplaceWith.String(), nil
 	}
 
-	// If there is a match, lookup the value in the configuration for the Daemon. If no key
+	// If there is a match, lookup the value in the configuration for the Talon instance. If no key
 	// is found, just return the string representation, otherwise use the value from the
-	// daemon configuration here.
+	// talon configuration here.
 	huntPath := configMatchRegex.ReplaceAllString(
 		configMatchRegex.FindString(cfr.ReplaceWith.String()), "$1",
 	)

@@ -41,11 +41,11 @@ type DockerNetworkConfiguration struct {
 	Interfaces dockerNetworkInterfaces `yaml:"interfaces"`
 }
 
-// DockerConfiguration defines the docker configuration used by the daemon when
+// DockerConfiguration defines the docker configuration used by talon when
 // interacting with containers and networks on the system.
 type DockerConfiguration struct {
 	// Network configuration that should be used when creating a new network
-	// for containers run through the daemon.
+	// for containers run through talon.
 	Network DockerNetworkConfiguration `json:"network" yaml:"network"`
 
 	// Domainname is the Docker domainname for all containers.
@@ -83,7 +83,7 @@ type DockerConfiguration struct {
 	// Sets the user namespace mode for the container when user namespace remapping option is
 	// enabled.
 	//
-	// If the value is blank, the daemon's user namespace remapping configuration is used,
+	// If the value is blank, the talon's user namespace remapping configuration is used,
 	// if the value is "host", then the pterodactyl containers are started with user namespace
 	// remapping disabled
 	UsernsMode string `default:"" json:"userns_mode" yaml:"userns_mode"`

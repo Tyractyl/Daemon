@@ -14,9 +14,9 @@ import (
 	"github.com/mholt/archives"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/remote"
-	"github.com/pterodactyl/wings/server/filesystem"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/remote"
+	"github.com/tyractyl/talon/server/filesystem"
 )
 
 var format = archives.CompressedArchive{
@@ -28,7 +28,7 @@ var format = archives.CompressedArchive{
 type AdapterType string
 
 const (
-	LocalBackupAdapter AdapterType = "wings"
+	LocalBackupAdapter AdapterType = "talon"
 	S3BackupAdapter    AdapterType = "s3"
 )
 

@@ -10,9 +10,9 @@ import (
 	"github.com/apex/log"
 	"github.com/docker/docker/client"
 
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/remote"
-	"github.com/pterodactyl/wings/server/backup"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/remote"
+	"github.com/tyractyl/talon/server/backup"
 )
 
 // Notifies the panel of a backup's state and returns an error if one is encountered
@@ -23,7 +23,7 @@ func (s *Server) notifyPanelOfBackup(uuid string, ad *backup.ArchiveDetails, suc
 			s.Log().WithFields(log.Fields{
 				"backup": uuid,
 				"error":  err,
-			}).Error("failed to notify panel of backup status due to wings error")
+			}).Error("failed to notify panel of backup status due to talon error")
 			return err
 		}
 
@@ -90,7 +90,7 @@ func (s *Server) Backup(b backup.BackupInterface) error {
 	}
 
 	// Try to notify the panel about the status of this backup. If for some reason this request
-	// fails, delete the archive from the daemon and return that error up the chain to the caller.
+	// fails, delete the archive from the talon instance and return that error up the chain to the caller.
 	if notifyError := s.notifyPanelOfBackup(b.Identifier(), ad, true); notifyError != nil {
 		_ = b.Remove()
 
@@ -153,7 +153,7 @@ func (s *Server) RestoreBackup(b backup.BackupInterface, reader io.ReadCloser) (
 	s.Log().Debug("starting file writing process for backup restoration")
 	err = b.Restore(s.Context(), reader, func(file string, info fs.FileInfo, r io.ReadCloser) error {
 		defer r.Close()
-		s.Events().Publish(DaemonMessageEvent, "(restoring): "+file)
+		s.Events().Publish(TalonMessageEvent, "(restoring): "+file)
 		// TODO: since this will be called a lot, it may be worth adding an optimized
 		// Write with Chtimes method to the UnixFS that is able to re-use the
 		// same dirfd and file name.

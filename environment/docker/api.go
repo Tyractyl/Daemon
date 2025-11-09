@@ -15,7 +15,7 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/errdefs"
 
-	"github.com/pterodactyl/wings/config"
+	"github.com/tyractyl/talon/config"
 )
 
 var (
@@ -46,7 +46,7 @@ func configure(c *client.Client) {
 
 // ContainerInspect is a rough equivalent of Docker's client.ContainerInspect()
 // but re-written to use a more performant JSON decoder. This is important since
-// a large number of requests to this endpoint are spawned by Wings, and the
+// a large number of requests to this endpoint are spawned by Talon, and the
 // standard "encoding/json" shows its performance woes badly even with single
 // containers running.
 func (e *Environment) ContainerInspect(ctx context.Context) (types.ContainerJSON, error) {
@@ -116,5 +116,5 @@ func parseErrorFromResponse(res *http.Response, body []byte) error {
 		emsg = strings.TrimSpace(string(body))
 	}
 
-	return errors.Wrap(errors.New(emsg), "Error response from daemon")
+	return errors.Wrap(errors.New(emsg), "Error response from talon")
 }

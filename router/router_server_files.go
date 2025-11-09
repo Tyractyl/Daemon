@@ -18,13 +18,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/internal/models"
-	"github.com/pterodactyl/wings/router/downloader"
-	"github.com/pterodactyl/wings/router/middleware"
-	"github.com/pterodactyl/wings/router/tokens"
-	"github.com/pterodactyl/wings/server"
-	"github.com/pterodactyl/wings/server/filesystem"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/internal/models"
+	"github.com/tyractyl/talon/router/downloader"
+	"github.com/tyractyl/talon/router/middleware"
+	"github.com/tyractyl/talon/router/tokens"
+	"github.com/tyractyl/talon/server"
+	"github.com/tyractyl/talon/server/filesystem"
 )
 
 // getServerFileContents returns the contents of a file on the server.
@@ -452,7 +452,7 @@ func postServerDecompressFiles(c *gin.Context) {
 	if err != nil {
 		if filesystem.IsErrorCode(err, filesystem.ErrCodeUnknownArchive) {
 			lg.WithField("error", err).Warn("failed to decompress file: unknown archive format")
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "The archive provided is in a format Wings does not understand."})
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "The archive provided is in a format Talon does not understand."})
 			return
 		}
 		middleware.CaptureAndAbort(c, err)

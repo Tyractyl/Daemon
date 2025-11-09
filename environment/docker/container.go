@@ -18,9 +18,9 @@ import (
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/client"
 
-	"github.com/pterodactyl/wings/config"
-	"github.com/pterodactyl/wings/environment"
-	"github.com/pterodactyl/wings/system"
+	"github.com/tyractyl/talon/config"
+	"github.com/tyractyl/talon/environment"
+	"github.com/tyractyl/talon/system"
 )
 
 var ErrNotAttached = errors.Sentinel("not attached to instance")
@@ -243,7 +243,7 @@ func (e *Environment) Create() error {
 
 		DNS: cfg.Docker.Network.Dns,
 
-		// Configure logging for the container to make it easier on the Daemon to grab
+		// Configure logging for the container to make it easier on the Talon instance to grab
 		// the server output. Ensure that we don't use too much space on the host machine
 		// since we only need it for the last few hundred lines of output and don't care
 		// about anything else in it.
@@ -304,7 +304,7 @@ func (e *Environment) SendCommand(c string) error {
 
 	// If the command being processed is the same as the process stop command then we
 	// want to mark the server as entering the stopping state otherwise the process will
-	// stop and Wings will think it has crashed and attempt to restart it.
+	// stop and Talon will think it has crashed and attempt to restart it.
 	if e.meta.Stop.Type == "command" && c == e.meta.Stop.Value {
 		e.SetState(environment.ProcessStoppingState)
 	}
