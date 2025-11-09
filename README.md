@@ -314,9 +314,8 @@ sudo systemctl restart tyractyl-daemon
 
 ## Documentation
 
-* [Panel Documentation](https://pterodactyl.io/panel/1.0/getting_started.html)
-* [Daemon Documentation](https://pterodactyl.io/wings/1.0/installing.html)
-* [Community Guides](https://pterodactyl.io/community/about.html)
+* [Panel Documentation](https://github.com/Tyractyl/Panel)
+* [Daemon Documentation](https://github.com/Tyractyl/Daemon)
 
 ## Reporting Issues
 
